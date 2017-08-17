@@ -1,9 +1,8 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
+﻿using System;
+using Xunit;
 
 namespace StandaloneReproduction
 {
-    [TestFixture]
     public class TheTest
     {
         // To make sure the issue reproduces:
@@ -18,15 +17,16 @@ namespace StandaloneReproduction
         //  4. Attach the debugger to a test runner process. Once the debugger is attached, the while loop will break
         // and the breakpoint will be triggered.
 
-        [Test]
+        [Fact]
         public void ExecuteStandaloneReproduction()
         {
             // while (!Debugger.IsAttached) ;
 
             var reproduction_sequence = new ReproductionSequence();
             var length = reproduction_sequence.GetLengthOfTheNormalizedVector();
-            length.Should().BeGreaterThan((float) 0.9);
-            length.Should().BeLessThan((float) 1.1);
+            Console.WriteLine($"Length: {length}");
+            Assert.True(length > 0.9);
+            Assert.True(length < 1.1);
         }
     }
 }
